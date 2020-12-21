@@ -1,23 +1,68 @@
 function validateForm() {
     /* Escribe tú código aquí */
 
+    $('span.msg').remove();
+
+    // nombre
+    var name = $('#name').val().trim();
+    if (name == '') {
+        $('#name').parent().append('<span class="msg">debe ingresar un nombre. primera letra mayuscula. sin carácteres especiales</span>')
+    } else if (name[0].toUpperCase() != name[0]) {
+        $('#name').parent().append('<span class="msg">primera letra en mayuscula<///span>')
+    } else if (soloLetras(name) == false) {
+        $('#name').parent().append('<span class="msg">solo letras permitidas</span>')
+    }
+
+    // apellido
+    var lastname = $('#lastname').val().trim();
+    if (lastname == '') {
+        $('#lastname').parent().append('<span class="msg">debe ingresar un apellido. primera letra mayuscula. sin carácteres especiales</span>')
+    } else if (lastname[0].toUpperCase() != lastname[0]) {
+        $('#lastname').parent().append('<span class="msg">primera letra en mayuscula</span>')
+    } else if (soloLetras(lastname) == false) {
+        $('#lastname').parent().append('<span class="msg">solo letras permitidas</span>')
+    }
+
+    // email
+    var email = $('#input-email').val().trim();
+    if (email == '') {
+        $('#input-email').parent().append('<span class="msg">debe ingresar un correo válido</span>')
+    } else if (validarEmail(email) == false) {
+        $('#input-email').parent().append('<span class="msg">mail no valido</span>')
+    }
+
+
+    // contraseña
+    var pass = $('#input-password').val().trim();
+    if (pass == '') {
+        $('#input-password').parent().append('<span class="msg">debe ingresar contraseña válida. minimo 6 caracteres</span>')
+    } else if (pass == 'password' || pass == '123456' || pass == '098765') {
+        $('#input-password').parent().append('<span class="msg">contraseña poco segura</span>')
+    } else if (pass.length < 6) {
+        $('#input-password').parent().append('<span class="msg">debe tener al menos 6 caracteres</span>')
+    }
+
+    // input box
+    var bike = $('select').val();
+    console.log(bike);
+    if (bike == '0') {
+        $('select').parent().append('<span class="msg">debe seleccionar un campo</span>')
+    }
+
 }
 
-/*Loc@s por las bicis
-Partiendo del ejercicio Loc@s por las bicis cambiaremos la forma de mostrar los errores al usuario, en vez de mostrar los errores con un alert, Si algún campo presenta error debe informarse al usuario por medio de mensaje, (idealmente un span) que se posicione en del lado derecho del input como se muestra en la imagen.
+function validarEmail(valor) {
+    if (/^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i.test(valor)) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
-Descarga los archivos en la sección de Descarga, descomprime y colócalos en tu carpeta llamada bicis-locas
-En la consola posiciónate en la carpeta bicis-locas e inicializa un repositorio en dicha carpeta
-Crea un repositorio que se llame bicis-locas en GITHUB, haz tu primer commit y sube los archivos al repositorio.
-Abre el archivo js/main.js y completa la función validateForm, (puedes usar las validaciones anteriores) recuerda que las validaciones de los campos son las siguientes:
-Todos los campos son obligatorios, excepto los dos últimos.
-Los campos nombre y apellido sólo deben permitir caracteres de la A-Z
-Para los campos nombre y apellido la primera letra debe ser mayúscula
-Validar que el campo email tenga un formato válido. Ej: name@domain.com
-El campo password debe tener al menos 6 caracteres
-El campo password no puede ser igual a "password" ó "123456" ó "098754"
-El valor seleccionado de bicis, debe ser una de las opciones presentadas
-NO SE PUEDE MODIFICAR NADA MÁS QUE EL ARCHIVO MAIN. EN INDEX.HTML SOLO SE PUEDE AGREGAR LIBRERÍAS JQUERY EN EL HEAD.
-
-**NOTA: ** Recomendamos que el mensaje se añada con un span ya que los estilos ya están definidos.
-*/
+function soloLetras(valor) {
+    if (/^[a-zA-Z ]+$/.test(valor)) {
+        return true;
+    } else {
+        return false;
+    }
+}
